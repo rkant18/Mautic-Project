@@ -1,0 +1,21 @@
+#####################MySQL Installation############################
+	  First We need to install MySQL 
+$  sudo apt install mysql-server  
+$  sudo systemctl start mysql.service
+
+Step 2 — Configuring MySQL and update root password
+
+$ sudo mysql 
+mysql >  ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
+mysql > exit
+
+$ mysql_secure_installation
+
+$ mysql -u root -p
+#####create New user
+
+CREATE DATABASE mauticdb;
+CREATE USER 'mautic'@'%' IDENTIFIED BY 'p@ssword';
+GRANT ALL PRIVILEGES ON mauticdb.* TO 'mautic'@'%';
+FLUSH PRIVILEGES;
+
