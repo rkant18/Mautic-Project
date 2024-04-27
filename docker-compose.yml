@@ -1,0 +1,43 @@
+
+
+################### Mautic Docker-compose file ########################
+VirtualMachine:1
+####### create new docker-compose.yml
+$ vi docker-compose.yml
+version: '3'
+
+networks:                        #### Add Networking with bridge network for VM-1 #########
+  mautic-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16  # Define a subnet for the network
+          gateway: 172.20.0.1    # Define the gateway address for the subnet
+
+services:
+
+  mautic:
+    restart: always
+    image: mautic/mautic:5.0-apache     #mautic/mautic:latest
+    container_name: mautic-container1
+    ports:
+      - 9000:80
+    volumes:
+      - ./mautic_data:/var/www/html/mautic
+    environment:
+      #- MYSQL_HOST=host.docker.internal
+      - MAUTIC_DB_HOST=192.168.1.5     #######Mysql server IP ############need to allow host with dbuser in mysql#####
+      - MYSQL_PORT_3306_TCP=3306
+      - MAUTIC_DB_USER=mautic
+      - MYSQL_ROOT_PASSWORD=test
+      - MAUTIC_DB_NAME=mauticdb
+      - MAUTIC_DB_PASSWORD=test
+      - PHP_VERSION=8.3.4
+      - PHP_URL=https://www.php.net/distributions/php-8.3.4.tar.xz
+      - PHP_ASC_URL=https://www.php.net/distributions/php-8.3.4.tar.xz.asc
+      - PHP_SHA256=39a337036a546e5c28aea76cf424ac172db5156bd8a8fd85252e389409a5ba63
+    networks:
+      mautic-network:
+        ipv4_address: 172.20.0.21     #### Provide IP Address to docker- container ####
+
+
