@@ -1,0 +1,17 @@
+Notes:
+1- Mysql is on DB server  and import prod DB Dump on it if we have existing DB.
+2- Need to add mautic server (VM) IP/hostname in mysql database
+
+#########CREATE USER 'mautic'@'192.168.1.4' IDENTIFIED BY 'test';     #####192.168.1.4 is mautic server IP ##########
+#########GRANT ALL PRIVILEGES ON *.* TO 'mautic'@'192.168.1.4' WITH GRANT OPTION;
+#########FLUSH PRIVILEGES;
+
+In My SQL configuration
+1- MySQL configuration file (/etc/mysql/mysql.conf.d/mysqld.cnf). From the configuration, it appears that MySQL is configured to listen on all network interfaces (bind-address = 0.0.0.0), which should allow connections from remote hosts.
+
+2- However, it's worth noting that there is a commented-out line for socket parameter:
+
+# socket        = /var/run/mysqld/mysqld.sock
+
+
+3- Check Firewall Rules: Make sure that there are no firewall rules blocking incoming connections to port 3306.
